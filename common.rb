@@ -20,3 +20,37 @@ class StackTrace
     end
   end
 end
+
+class InstructionCounter
+  def initialize()
+    @counter = Hash.new(0)
+  end
+
+  def count(log_line:)
+    raise ArgumentError.new("Empty log line") if log_line.empty?
+
+    opcode = match(line: log_line)
+    @counter[opcode] += 1
+  end
+
+  def dump(log_line: '')
+    if log_line.empty?
+      @counter.keys.each do |key|
+       print_opcode(opcode: key)
+      end
+      return
+    end
+    print_opcode(opcode: match(line: log_line))
+  end
+
+  private
+
+  def print_opcode(opcode:)
+    puts "OP: #{opcode}, Count: #{@counter[opcode]}"
+  end
+
+  def match(line:)
+    raise ArgumentError.new("Empty line") if line.empty?
+    return line.match(/OP: (0[xX][0-9a-fA-F]+)/).captures.first
+  end
+end
