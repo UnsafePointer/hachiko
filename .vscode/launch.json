@@ -9,6 +9,11 @@
             "type": "Ruby",
             "request": "launch",
             "cwd": "${workspaceRoot}",
+            "args": [
+                "instrcmp",
+                "nana.log",
+                "emulator.log"
+            ],
             "program": "${workspaceRoot}/hachiko.rb"
         },
     ]
