@@ -23,20 +23,26 @@ class Hachiko < Thor
     line = 1
     loop do
       log1_line = file1.next
-      stack1.push(instruction: log1_line, at_line: line)
-      instruction_counter1.count(log_line: log1_line)
       log2_line = file2.next
+
+      stack1.push(instruction: log1_line, at_line: line)
       stack2.push(instruction: log2_line, at_line: line)
-      instruction_counter2.count(log_line: log2_line)
+
+      if instruction_line?(log_line: log1_line) && instruction_line?(log_line: log2_line)
+        instruction_counter1.count(log_line: log1_line)
+        instruction_counter2.count(log_line: log2_line)
+      end
 
       unless log1_line.eql?(log2_line)
         puts "Line: #{line}"
-        puts "#{log1}:"
-        instruction_counter1.dump()
-        stack1.print()
-        puts "#{log2}:"
-        instruction_counter2.dump()
-        stack2.print()
+        File.open("#{log1.split('.').first}.txt", 'w') do |file|
+          file.write(instruction_counter1.dump())
+          file.write(stack1.print())
+        end
+        File.open("#{log2.split('.').first}.txt", 'w') do |file|
+          file.write(instruction_counter2.dump())
+          file.write(stack2.print())
+        end
         break
       end
       line += 1
