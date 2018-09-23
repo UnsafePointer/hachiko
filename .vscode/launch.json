@@ -10,7 +10,8 @@
             "request": "launch",
             "cwd": "${workspaceRoot}",
             "args": [
-                "instrcmp",
+                // "instrcmp",
+                "vmemcmp",
                 "nana.log",
                 "emulator.log"
             ],

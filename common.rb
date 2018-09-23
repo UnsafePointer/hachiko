@@ -62,3 +62,31 @@ class InstructionCounter
     return line.match(/OP: (0[xX][0-9a-fA-F]+)/).captures.first
   end
 end
+
+class VBlankCounter
+  attr_reader :vblank_counter
+
+  def initialize()
+    @vblank_counter = 0
+  end
+
+  def count(log_line:)
+    raise ArgumentError.new("Empty log line") if log_line.empty?
+
+    @scanline = match(line: log_line)
+    return unless @scanline
+
+    if @scanline.to_i >= 143
+      @vblank_counter += 1
+    end
+  end
+
+  private
+
+  def match(line:)
+    raise ArgumentError.new("Empty line") if line.empty?
+    match = line.match(/Scanline: ([0-9]+)/)
+    return nil unless match
+    return match.captures.first
+  end
+end
