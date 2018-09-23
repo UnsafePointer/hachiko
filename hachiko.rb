@@ -43,10 +43,12 @@ class Hachiko < Thor
           file.write(instruction_counter2.dump())
           file.write(stack2.print())
         end
+        exit(1)
         break
       end
       line += 1
     end
+    exit(0)
   end
 end
 
