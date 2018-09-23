@@ -44,7 +44,6 @@ class Hachiko < Thor
           file.write(stack2.print())
         end
         exit(1)
-        break
       end
       line += 1
     end
