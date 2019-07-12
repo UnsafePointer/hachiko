@@ -55,28 +55,38 @@ class Hachiko < Thor
     instruction_counter1 = InstructionCounter.new()
     instruction_counter2 = InstructionCounter.new()
     line = 1
+    line_stop = -1
     loop do
       log1_line = file1.next
       log2_line = file2.next
 
-      stack1.push(instruction: log1_line, at_line: line)
-      stack2.push(instruction: log2_line, at_line: line)
+      # stack1.push(instruction: log1_line, at_line: line)
+      # stack2.push(instruction: log2_line, at_line: line)
 
-      if instruction_line?(log_line: log1_line) && instruction_line?(log_line: log2_line)
-        instruction_counter1.count(log_line: log1_line)
-        instruction_counter2.count(log_line: log2_line)
+      # if instruction_line?(log_line: log1_line) && instruction_line?(log_line: log2_line)
+      #   instruction_counter1.count(log_line: log1_line)
+      #   instruction_counter2.count(log_line: log2_line)
+      # end
+
+      if (line == line_stop)
+        puts "Line: #{line}"
+        puts "Log 1: #{log1_line}"
+        puts "Log 2: #{log2_line}"
+        exit(1)
       end
 
       unless log1_line.eql?(log2_line)
         puts "Line: #{line}"
-        File.open("#{log1.split('.').first}.txt", 'w') do |file|
-          file.write(instruction_counter1.dump())
-          file.write(stack1.print())
-        end
-        File.open("#{log2.split('.').first}.txt", 'w') do |file|
-          file.write(instruction_counter2.dump())
-          file.write(stack2.print())
-        end
+        puts "Log 1: #{log1_line}"
+        puts "Log 2: #{log2_line}"
+        # File.open("#{log1.split('.').first}.txt", 'w') do |file|
+        #   file.write(instruction_counter1.dump())
+        #   file.write(stack1.print())
+        # end
+        # File.open("#{log2.split('.').first}.txt", 'w') do |file|
+        #   file.write(instruction_counter2.dump())
+        #   file.write(stack2.print())
+        # end
         exit(1)
       end
       line += 1
